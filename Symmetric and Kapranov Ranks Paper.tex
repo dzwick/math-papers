@@ -1,0 +1,514 @@
+\documentclass{article}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+
+\begin{document}
+
+\section{When the Minors of a Symmetric Matrix Form a Tropical Basis}
+
+In this section we examine all cases where the $r \times r$ minors of an $n \times n$ symmetric matrix of variables form a tropical basis, with the exception of the boundary case $r = 4$. These cases are $r = 2$, $r = 3$, and $r = n$.
+
+To prove this, we will want a couple useful facts:
+
+\begin{itemize}
+  
+\item If $A$ is a symmetric matrix, and we permute the rows of $A$ by a permutation $\sigma$, and the columns of $A$ by the \emph{same} permutation, then the resulting matrix $A'$ will be symmetric, and $A'$ will have the same symmetric tropical and symmetric Kapranov rank as $A$. We call a permutation of the rows and columns of $A$ by the same permutation a \emph{diagonal permutation}. 
+  
+\item If $A$ is a symmetric matrix, and we tropically multiply row $i$ by a constant $c$, and tropically multiply column $i$ by the \emph{same} constant, then the resulting matrix $A'$ will be symmetric, and $A'$ will have the same symmetric tropical and symmetric Kapranov rank as $A$. We call such an operation a \emph{symmetric} scaling of $A$.
+  
+\end{itemize}
+
+In particular, we will assume without loss of generality that any symmetric matrix $A$ has been symmetrically scaled so that every row/column has $0$ as its minimal entry.
+
+\subsection{Singular Symmetric Matrices}
+
+By definition, a symmetric matrix is singular if it has less than full rank, and it is a fundamental result in linear algebra that this is the case if and only if the matrix has zero determinant.
+
+\newtheorem{thm}{Theorem}
+\begin{thm}
+  The determinant of a symmetric matrix of variables is a tropical basis for the ideal it generates. Equivalently, the $n \times n$ minor of an $n \times n$ symmetric matrix of variables forms a tropical basis.
+\end{thm}
+
+\begin{proof}
+  The determinant of a symmetric matrix of variables is a single polynomial, and is therefore a tropical basis by Kapranov's theorem.
+\end{proof}
+
+So, an $n \times n$ symmetric matrix has symmetric tropical rank $n$ if and only if it has symmetric Kapranov rank $n$, which is equivalently stated as $\tilde{S}_{n,n} = S_{n,n}$. If a symmetric matrix is symmetrically tropically singular, it has less than full tropical and Kapranov ranks, and for this symmetric matrix there exists a lift to a symmetric singular matrix over $\tilde{K}$. 
+
+\subsection{Rank One Symmetric Matrices}
+
+The rank one case is straightforward.
+
+\begin{thm}
+  A symmetric matrix has symmetric tropical rank one if and only if it has symmetric Kapranov rank one. Equivalently, the $2 \times 2$ minors of a symmetric matrix of variables are a tropical basis.
+\end{thm}
+
+\begin{proof}
+  As the symmetric tropical rank cannot be greater than the symmetric Kapranov rank, any symmetric matrix with symmetric Kapranov rank one must also have symmetric tropical rank one.
+  
+  If a symmetric matrix has symmetric tropical rank one, then by Proposition 2.6 it also has standard tropical rank one. This means every column of the matrix is a constant tropical multiple of the first column. If our matrix is of the form:
+  \begin{center}
+    $A = \left(\begin{array}{cccc} a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\ a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n,1} & a_{n,2} & \cdots & a_{n,n} \end{array}\right)$,
+  \end{center}
+  and $\textbf{a}_{i}$ represents column $i$ of the matrix $A$, then $\textbf{a}_{i} = c_{i} \odot \textbf{a}_{1}$ for some constant $c_{i}$. By assumption $A$ is symmetric, so $a_{i,j} = a_{j,i}$. The matrix $A$ is the tropicalization of the matrix
+  \begin{center}
+    $\tilde{A} = \left(\begin{array}{cccc} \tilde{a}_{1,1} & \tilde{a}_{1,2} & \cdots & \tilde{a}_{1,n} \\ \tilde{a}_{2,1} & \tilde{a}_{2,2} & \cdots & \tilde{a}_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ \tilde{a}_{n,1} & \tilde{a}_{n,2} & \cdots & \tilde{a}_{n,n} \end{array}\right)$,
+  \end{center}
+  where $\tilde{a}_{i,1} = t^{m_{i,1}}$, and $\tilde{a}_{i,j} = t^{c_{j}}\tilde{m}_{i,1}$. The matrix $\tilde{A}$ has rank one by construction, and as $a_{i,j} = a_{j,i}$ we have 
+  \begin{center}
+    $\tilde{a}_{i,j} = t^{c_{j}}\tilde{a}_{i,1} = t^{c_{j} + a_{i,1}} = t^{a_{i,j}} = t^{a_{j,i}}$
+    
+    $= t^{c_{i} + a_{j,1}} = t^{c_{i}}t^{a_{j,1}} = t^{c_{i}}\tilde{a_{j,1}} = \tilde{a_{j,i}}$. 
+  \end{center}
+  So, $\tilde{A}$ is symmetric, and therefore $A$ has Kapranov rank one.
+\end{proof}
+
+\newtheorem{cor}{Corollary}
+\begin{cor}
+  A $3 \times 3$ symmetric matrix $A$ has symmetric Kapranov rank two if and only if it has symmetric tropical rank two.
+\end{cor}
+
+\begin{proof}
+  If $A$ has symmetric Kapranov rank two, then its symmetric tropical rank cannot be more than two, and by Theorem 3.2 its symmetric tropical rank cannot be one.
+  
+  If $A$ has symmetric tropical rank two its symmetric Kapranov rank must be at least two, and by Theorem 3.1 its symmetric Kapranov rank cannot be three.
+\end{proof}
+
+\subsection{Rank Two Symmetric Matrices}
+
+In this subsection we prove the $3 \times 3$ minors of a symmetric $n \times n$ matrix form a tropical basis. A few times we will make the inductive assumption that, for a given natural number $n$, it is the case that the $3 \times 3$ minors of an $m \times m$ symmetric matrix form a tropical basis for $m < n$. The $n = 3$ case from Corollary 3.3 serves as the base. The proof will be built on the foundation of several lemmas. In several places the proof given here uses ideas and modifications of arguments from the corresponding proof in Section 6 of \cite{dss}.
+
+\subsubsection{Matrix Structure}
+
+\newtheorem{lem}{Lemma}
+\begin{lem}
+  Let $A$ be a symmetric matrix of symmetric tropical rank two. After possibly a diagonal permutation $A$ has the block structure:
+  \begin{center}
+    $\left(\begin{array}{ccccc} \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & B_{1} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & B_{2} & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} & C \\ \textbf{0} & \textbf{0} & \textbf{0} & C^{T} & \textbf{0} \end{array}\right)$,
+  \end{center}
+  where the matrices $B_{1}$ and $B_{2}$ are symmetric and positive, and the matrix $C$ is non-negative and has no zero columns. Each $\textbf{0}$ represents a zero matrix of the appropriate size.  It is possible that $A$ has no rows/columns with all $0$ entries, and so the first row/column blocks of $A$ may be empty. It is also possible that the matrices $B_{1}, B_{2}$ and $C$ may have size zero. The only exceptions being $A$ cannot be a matrix consisting of just one of the positive blocks ($B_{1}$ or $B_{2}$), nor can $A$ be the zero matrix. 
+\end{lem}
+
+\begin{proof}
+  Our proof follows the proof of Lemma 6.2 in \cite{dss}, modified appropriately for symmetric matrices. In \cite{dss} they prove that if $M$ is a real matrix normalized so that every column has $0$ as its minimal entry, then if $M$ has standard tropical rank two it has, after possibly permuting the rows and columns, the block structure:
+  
+  \begin{center}
+    
+    $\left(\begin{array}{ccccc} \textbf{0} & \textbf{0} & \textbf{0} & \cdots & \textbf{0} \\ \textbf{0} & M_{1} & \textbf{0} & \cdots & \textbf{0} \\ \textbf{0} & \textbf{0} & M_{2} & \cdots & \textbf{0} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ \textbf{0} & \textbf{0} & \textbf{0} & \cdots & M_{k} \end{array}\right)$.
+    
+  \end{center}
+  
+  The matices $M_{i}$ have all positive entries, each $\textbf{0}$ represents a matrix of zeros of the appropriate size, and the first row and column blocks of $M$ may have size zero. The block structure in the symmetric case is different because we have a modified definition of what it means for a submatrix to be singular, and we are only allowed to make diagonal permutations, not arbitrary permutaitons, of rows and columns.
+  
+  As defined in \cite{ds} the tropical convex hull of a set of real vectors $\{\textbf{v}_{1},\ldots,\textbf{v}_{m}\}$ is the set of all tropical linear combinations
+  
+  \begin{center}
+    
+    $c_{1} \odot \textbf{v}_{1} \oplus c_{2} \odot \textbf{v}_{2} \oplus \cdots \oplus c_{m} \odot \textbf{v}_{m}$ \hspace{.1 in} where $c_{1},\ldots,c_{m} \in \mathbb{R}$.
+    
+  \end{center}
+  
+  Theorem 4.2 from \cite{dss} states that the standard tropical rank of a real matrix is equal to one plus the dimension of the tropical convex hull of its columns. As the standard tropical rank of a matrix is equal to the standard tropical rank of its transpose, the standard tropical rank of a real matrix is also equal to one plus the dimension of the tropical convex hull of its rows. 
+  
+  We construct a matrix $A'$ from $A$ by adjoining the zero vector as the first column:
+  
+  \begin{center}
+    
+    $A' := \left(\begin{array}{cc} \textbf{0} & A \end{array}\right)$.
+    
+  \end{center}
+  
+  From $A'$ we construct the matrix $A^{+}$ by adjoining the zero row as the first row:
+  
+  \begin{center}
+    
+    $A^{+} := \left(\begin{array}{c} \textbf{0} \\ A' \end{array}\right) = \left(\begin{array}{cc} 0 & \textbf{0} \\ \textbf{0} & A \end{array}\right)$.
+    
+  \end{center}
+  
+  As the matrix $A$ has symmetric tropical rank two, by Corollary 2.7 it must also have standard tropical rank two. Every row of $A$ contains $0$ as its minimal entry, and so the tropical convex hull of the columns of $A'$ is equal to the tropical convex hull of the columns of $A$. Therefore, the standard tropical rank of $A'$ is two. As every column of $A'$ contains zero as its minimal entry the tropical convex hull of the rows of $A^{+}$ is equal to the tropical convex hull of the rows of $A'$. Therefore, the standard tropical rank of $A^{+}$ is two.
+
+  We derive the asserted block decomposition of $A$ from the claim that any two columns of $A^{+}$ have either equal or disjoint cosupports, where the cosupport of a column is the set of positions where it does not have a zero. To prove this, observe that if this were not so $A^{+}$ would have the following submatrix, where $+$ denotes a positive entry, $?$ denotes a nonnegative entry, and the first column of the submatrix is taken from the first column of $A^{+}$. (Recall that each column of $A$ contains a zero entry.)
+
+  \begin{center}
+
+    $\left(\begin{array}{ccc} 0 & + & + \\ 0 & 0 & + \\ 0 & ? & 0 \end{array}\right)$
+
+  \end{center}
+
+  This $3 \times 3$ matrix is standard tropically nonsingular, which cannot be given $A^{+}$ has standard tropical rank two.
+
+  If the diagonal entry $a_{i,i}$ of $A^{+}$ is positive, then, as $A^{+}$ is symmetric, for any entry $a_{j,i}$ with $j \neq i$ if $a_{j,i}$ is positive $a_{i,j}$ is as well, and this means columns $i$ and $j$ have equal cosupports. In particular, $a_{j,j}$ is positive. From this we see that the positive entries of column $i$, and the positive entries from columns with cosupports equal to column $i$, form a positive principal submatrix of $A^{+}$. After possibly a diagonal permutation, this submatrix is the submatrix $B_{1}$ of $A^{+}$. If $A^{+}$ contains additional positive diagonal entries outside of $B_{1}$ then, using identical reasoning, possibly after a diagonal permutation we have the submatrix $B_{2}$. There cannot be three positive diagonal blocks, for then we would be able to construct the $3 \times 3$ principal submatrix of $A$:
+  \begin{center}
+    $\left(\begin{array}{ccc} a & 0 & 0 \\ 0 & b & 0 \\ 0 & 0 & c \end{array}\right)$,
+  \end{center}
+  where $a,b,c > 0$. This matrix is not symmetrically tropically singular, and this would contradict that $A$ has symmetric tropical rank two. Note the difference here between the standard and the symmetric case. This $3 \times 3$ principal minor is not symmetrically tropically singular, but it is standard tropically singular. This is why in the standard rank two case the number of positive blocks can be arbitrarily large, while in the symmetric rank two case the number is limited to two.
+
+  After possibly another diagonal permutation we can arrange the columns and rows of $A^{+}$ so that, from left to right, the first columns are the zero columns, followed by the columns that contain $B_{1}$, followed by the columns that contain $B_{2}$. The remaining columns must all have a $0$ entry on the diagonal, and a positive entry $a_{i,j}$ for some $i \neq j$. Row $i$ obviously cannot be a zero row, nor can it intersect $B_{1}$ or $B_{2}$, and so must be below the submatrix $B_{2}$. Denote as $A''$ the submatrix formed by all columns to the right of $B_{2}$, and all rows below $B_{2}$.
+  
+  The submatrix $A''$ is symmetric, does not contain a zero row/column, and has $0$ along its diagonal. In particular its upper-left $1 \times 1$ principal submatrix is a zero matrix. Suppose the upper-left $k \times k$ principal submatrix of $A''$ is a zero matrix. If for some column $\textbf{a}'_{i}$ all the terms in $\textbf{a}'_{i}$ to the right of this $k \times k$ principal submatrix are $0$, then the diagonal permutation that switches indices $i$ and $k+1$ will construct an upper-left $(k+1) \times (k+1)$ principal submatrix that is a zero matrix. We continue this process until no such column $\textbf{a}'_{i}$ exists, in which case, given our result about either equal or disjoint cosupports, $A''$, and therefore $A$, has our desired block decomposition. 
+  
+  We note finally that $A$ cannot be just a positive block, because that would violate the assumption that the minimum value in every row/column is $0$. $A$ also cannot be the zero matrix, for then it would have symmetric tropical rank one.
+\end{proof}
+
+\begin{lem}
+  If $A$ is a symmetric matrix normalized so the rows/columns have $0$ as their minimal entry, and $A^{+}$ is the augmented matrix
+  
+  \begin{center}
+    
+    $A^{+} = \left(\begin{array}{cc} 0 & \textbf{0} \\ \textbf{0} & A \end{array}\right)$,
+    
+  \end{center}
+  
+  then:
+  
+  \begin{enumerate}
+    
+  \item If $A$ has symmetric tropical rank two, so does $A^{+}$.
+    
+  \item If $A$ has symmetric Kapranov rank two, so does $A^{+}$.
+    
+  \end{enumerate}
+\end{lem}
+
+\begin{proof}[Proof Of Part (1)]
+  Suppose $A$ has symmetric tropical rank two. We may assume that, possibly after a diagonal permutation, the matrix $A$ has the block decomposition given in Lemma 3.4. In the proof of Lemma 3.4 we demonstrated that if $A$ has symmetric tropical rank two, then $A^{+}$ has standard tropical rank two. By Proposition 2.8 the only way a symmetric matrix can have standard tropical rank two but not symmmetric tropical rank two is if a principal $3 \times 3$ submatrix is standard tropically singular but not symmetrically tropically singular. By assumption, $A$ has symmetric tropical rank two, so the only way $A^{+}$ could not is if a principal $3 \times 3$ submatrix of $A^{+}$ involving the initial zero row/column were tropically singular but not symmetrically tropically singular. The possible $3 \times 3$ principal submatrices of this type have the forms (where an element not specified as being $0$ is positive):
+  \begin{center}
+    $\left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{array}\right)$, \hspace{.1 in} $\left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & a_{i,i} \end{array}\right)$, \hspace{.1 in} $\left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & a_{i,i} & 0 \\ 0 & 0 & a_{j,j} \end{array}\right)$,
+    
+    $\left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & 0 & a_{i,j} \\ 0 & a_{j,i} & 0 \end{array}\right)$, \hspace{.1 in} $\left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & a_{i,i} & a_{i,j} \\ 0 & a_{j,i} & a_{j,j} \end{array}\right)$.
+  \end{center}
+  
+  Of these possibilities the only one that is not obviously symmetrically tropically singular is the last one. For this possibility, if $a_{i,i} < a_{i,j}$ or $a_{j,j} < a_{i,j}$ then the submatrix is not standard tropically singular, which cannot be. So, assume $a_{i,j} = a_{j,i} < a_{i,i},a_{j,j}$. If $A$ contains a zero row/column or the submatrix $C$ (from Lemma 3.4) has positive size then, possibly after a diagonal permutation, $A$ must contain the $3 \times 3$ matrix under examination as a principal submatrix, and therefore the submatrix must be symmetrically tropically singular. If $A$ consists of two positive blocks and nothing else then $A$ has the following $3 \times 3$ submatrix:
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{i,i} & a_{i,j} & 0 \\ a_{j,i} & a_{j,j} & 0 \\ 0 & 0 & a_{k,k} \end{array}\right)$,
+  \end{center}
+  where $a_{k,k} > 0$. If $a_{i,j} = a_{j,i} < a_{i,i}, a_{j,j}$ then this matrix is not symmetrically tropically singular, which violates our assumption about $A$. So, $A^{+}$ has symmetric tropical rank two.
+\end{proof}
+
+\begin{proof}[Part (2)]
+  If $A$ has symmetric Kapranov rank two then there exists a rank two symmetric lift which we will call $\tilde{A}$. From Lemma 3.4 we know $A$ must have two nonzero columns with disjoint cosupports. Denote as $\tilde{\textbf{a}}_{i}$ and $\tilde{\textbf{a}}_{j}$ the corresponding columns in $\tilde{A}$. If $\lambda, \mu \in \tilde{K}$ have degree zero but are otherwise generic, then the vector
+  \begin{center}
+    $\tilde{\textbf{v}} = \lambda\tilde{\textbf{a}}_{i} + \mu\tilde{\textbf{a}}_{j}$
+  \end{center}
+  has all degree zero terms. This is because as $\textbf{a}_{i}$ and $\textbf{a}_{j}$ have disjoint cosupports, the sum
+  \begin{center}
+    $v_{k} = \lambda a_{k,i} + \mu a_{k,j}$
+  \end{center}
+  involves at least one term, $a_{k,i}$ or $a_{k,j}$, of degree zero. If both have degree zero, then $\lambda$ and $\mu$ being generic guarantees we do not have cancellation of leading terms. So, $v_{k}$ has degree zero.
+
+  The matrix formed by adjoining $\tilde{\textbf{v}}$ to $\tilde{A}$,
+  \begin{center}
+    $\tilde{A}' := \left(\begin{array}{cc} \tilde{\textbf{v}} & \tilde{A} \end{array}\right)$,
+  \end{center}
+  must have rank two. If we augment $\tilde{A}'$ by adding a row formed by the linear combination of rows $i$ and $j$ of $\tilde{A}'$ multiplied by $\lambda$ and $\mu$, respectively, then as $\tilde{A}$ is symmetric we get the symmetric matrix
+  \begin{center}
+    $\tilde{A}^{+} := \left(\begin{array}{cc} \tilde{a}_{0,0} & \tilde{\textbf{v}}^{T} \\ \tilde{\textbf{v}} & A \end{array}\right)$.
+  \end{center}
+  This matrix has rank two. The entry $\tilde{a}_{0,0}$ is:
+  \begin{center}
+    $\tilde{a}_{0,0} = \lambda v_{i} + \lambda v_{k} = \lambda (\lambda a_{i,i} + \mu a_{i,j}) + \mu (\lambda a_{j,i} + \mu a_{j,j}) = \lambda^{2}a_{i,i} + 2\lambda\mu a_{i,j} + \mu^{2}a_{j,j}$.
+  \end{center}
+  For the final equality we use $a_{i,j} = a_{j,i}$. At least one of $a_{i,i}, a_{i,j}, a_{j,j}$ has degree zero. As $\lambda, \mu$ are generic we cannot have cancellation of leading terms, and therefore $\tilde{a}_{0,0}$ has degree zero.
+  
+  So, the above matrix is a rank two symmetric lift of $A^{+}$, and therefore $A^{+}$ has symmetric Kapranov rank two.
+\end{proof}
+
+\subsubsection{Kapranov and Tropical Rank}
+
+We now state the major theorem of this chapter, which has two implications. The proof of the simpler implication is given first. The proof of the more difficult implication is the subject of the rest of this chapter. An outline of the proof of this more difficult implication is provided below, followed by the complete proof. 
+
+\begin{thm}
+  A symmetric matrix $A$ has symmetric tropical rank two if and only if it has symmetric Kapranov rank two.
+\end{thm}
+
+\begin{proof}[Symmetric Kapranov rank two implies symmetric tropical rank two]
+  If $A$ has symmetric Kapranov rank two then by Theorem 3.2 it cannot have symmetric tropical rank one. The symmetric tropical rank cannot be greater than the symmetric Kapranov rank, and so $A$ must have tropical rank two.
+\end{proof}
+
+\begin{proof}[Outline that symmetric tropical rank two implies symmetric Kapranov rank two]
+  Our method of proof for this implication is to first prove some special cases, and then use these special cases to construct our general proof. We may assume that if $A$ has symmetric tropical rank two then it has the block decomposition given by Lemma 3.4. We prove the following special cases:
+  \begin{description}
+  \item[Case 1] -  
+
+    Suppose $A$ has the form
+    \begin{center}
+      $\left(\begin{array}{ccc} \textbf{0} & \textbf{0} & C \\ \textbf{0} & 0 & \textbf{0} \\ C^{T} & \textbf{0} & \textbf{0} \end{array}\right)$,
+    \end{center}
+    where $C$ is nonnegative and has no zero column. If $A$ has symmetric tropical rank two it has symmetric Kapranov rank two.
+    
+  \item[Case 2] -
+
+    Suppose $A$ has the form
+    \begin{center}
+      $\left(\begin{array}{ccc} B_{1} & \textbf{0} & \textbf{0} \\ \textbf{0} & 0 & \textbf{0} \\ \textbf{0} & \textbf{0} & B_{2} \end{array}\right)$,
+    \end{center}    
+    where $B_{1}, B_{2}$ are positive symmetric matrices of positive size. If $A$ has symmetric tropical rank two it has symmetric Kapranov rank two.
+  \end{description}
+  
+  Combining these two results, we prove:
+
+  \begin{description}
+  \item[Case 3] -
+
+    Suppose $A$ has the form   
+    \begin{center}
+      $\left(\begin{array}{ccccc} B_{1} & \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & B_{2} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & 0 & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} & C \\ \textbf{0} & \textbf{0} & \textbf{0} & C^{T} & \textbf{0} \end{array}\right)$,
+    \end{center}
+    where $B_{1}, B_{2}$ are symmetric and positive, $C$ is nonnegative and does not contain a zero column, and either $C$ or both $B_{1}$ and $B_{2}$ have positive size. If $A$ has symmetric tropical rank two it has symmetric Kapranov rank two.
+  \end{description}
+  
+  With this third case proven we will complete the proof of the theorem with a simple induction argument.
+
+  The rest of this chapter is devoted to completing the proof sketched by this outline.
+
+\end{proof}
+
+\subsection{Supporting Lemmas}
+
+We now prove the cases above as a series of lemmas.
+
+\begin{lem}
+  Suppose $A$ is a matrix of the form
+  \begin{center}      
+    $\left(\begin{array}{ccc} \textbf{0} & \textbf{0} & C \\ \textbf{0} & 0 & \textbf{0} \\ C^{T} & \textbf{0} & \textbf{0} \end{array}\right)$,
+  \end{center}   
+  where $C$ is nonnegative and has no zero column. If $A$ has symmetric tropical rank two, it has symmetric Kapranov rank two.
+\end{lem}
+
+\begin{proof}
+  We number the rows and columns of $A$ from $-k$ to $l$, where $k \times k$ and $l \times l$ are the dimensions of the upper-left and bottom-right zero matrices, respectively. So, the upper-left zero matrix is the submatrix of nonpositive indices, and the bottom-right zero matrix is the submatrix of nonnegative indices. The row and column indexed zero consists of all zeroes. Further, in $A$ the rows and columns in the upper-left zero matrix will be referred to ``in reverse.'' So, the first and second columns of the upper-left zero matrix are indexed $0$ and $-1$ in $A$. Elements from $C$ or $C^{T}$ will be represented with an indexed lower-case ``c,'' while other elements will be represented with an indexed lower-case ``a.''
+  
+  As $C$ does not contain a zero column we may, possibly after a diagonal permutation, assume the entries $C_{-1,1} = C_{1,-1}$ are positive.
+
+  We now construct a symmetric rank two lifting $\tilde{A}$ of $A$. The upper-right submatrix
+  \begin{center}
+    $A_{UR} = \left(\begin{array}{cc} \textbf{0} & C \\ 0 & \textbf{0} \end{array}\right)$
+  \end{center}  
+  has (standard) tropical rank two, and so by Theorem 6.5 from \cite{dss} there exists a rank two lift $\tilde{A}_{UR}$ of this submatrix.\footnote{Theorem 6.5 from \cite{dss} relies upon Corollary 6.4 from the same paper, and Corollary 6.4 contains an error in its proof. A correction for this error is given in the first appendix of this dissertation.} As $C$ does not contain the zero column, the first two columns of $\tilde{A}_{UR}$ must be linearly independent, and every other column of $\tilde{A}_{UR}$ can be written as a linear combination of these first two columns:
+  \begin{center}
+    $\lambda_{j}\textbf{a}_{0} + \mu_{j}\textbf{a}_{1} = \textbf{a}_{j}$.
+  \end{center}
+ 
+  The relation
+  \begin{center}
+    $\lambda_{j}a_{0,0} + \mu_{j}a_{0,1} = a_{0,j}$
+  \end{center}
+  implies the degrees of $\lambda_{j}$ and $\mu_{j}$ cannot both be positive, if one has positive degree the other must have degree zero, and if their degrees are both nonpositive they must be equal. If both $\lambda_{j}$ and $\mu_{j}$ had negative degrees, then given $C$ does not contain the zero column $C$ would have a negative entry, but this is not allowed as $C$ is nonnegative. If $\mu_{j}$ had positive degree then $\lambda_{j}$ would have degree zero, but this cannot be as then $C$ would contain the zero column. So, we must have $deg(\lambda_{j}) \geq deg(\mu_{j}) = 0$. 
+  
+  We use this lift $\tilde{A}_{UR}$, and its transpose, for the upper-right and bottom left submatrices of $\tilde{A}$. We must complete the lift with entries $a_{i,j}$ for every $i,j$ with $ij > 0$, such that $deg(a_{i,j}) = 0$, $a_{i,j} = a_{j,i}$, and the entire matrix $\tilde{A}$ has rank two. We begin this task with the $3 \times 3$ central minor:
+
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & c_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ c_{1,-1} & a_{1,0} & a_{1,1} \end{array}\right)$.
+  \end{center}
+  
+  We pick $a_{1,1}$ such that $deg(a_{1,1}) = 0$, but otherwise generically. We want this matrix to be singular, and so once $a_{1,1}$ has been picked $a_{-1,-1}$ is determined. 
+
+  As $a_{1,1}$ is generic, $a_{-1,-1}$ is as well. If $deg(a_{-1,-1}) < 0$, then in order for the above $3 \times 3$ matrix to be singular the leading terms in $a_{0,0}a_{1,1}-a_{0,1}a_{1,0}$ would need to cancel, which is impossible if $a_{1,1}$ is generic. If $deg(a_{-1,-1}) > 0$, then as $deg(c_{-1,1}) = deg(c_{1,-1}) > 0$ there would only be a single degree zero term, $a_{-1,0}a_{0,-1}a_{1,1}$, in the determinant of the $3 \times 3$ matrix, which would make it impossible for it to be singular. So, $deg(a_{-1,-1}) = 0$. 
+
+  From here every term $a_{i,1}$ and $a_{i,-1}$, with $i > 1$ or $i < 1$, respectively, is determined by the need for the matrices
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & c_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ c_{i,-1} & a_{i,0} & a_{i,1} \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} a_{i,-1} & a_{i,0} & c_{i,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ c_{1,-1} & a_{1,0} & a_{1,1} \end{array}\right)$
+  \end{center}
+  to be, respectively, singular, and that $a_{1,1}$ and $a_{-1,-1}$ are generic ensures all these terms are generic and have degree zero. The remaining entries $i,j > 1$ in the bottom-right zero matrix are determined by the relations:
+  \begin{center}
+    $\lambda_{j}a_{i,0} + \mu_{j}a_{i,1} = a_{i,j}$.
+  \end{center}
+  As $a_{i,1}$ is generic, $deg(a_{i,j}) = 0$ even if $deg(\lambda_{j}) = deg(\mu_{j})$. The degree zero upper-left entries are determined similarly.
+  
+  It remains to be proven that our lift is symmetric. We first prove $a_{1,i} = a_{i,1}$, with $i > 1$. We examine the matrices
+  
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & c_{-1,i} \\ a_{0,-1} & a_{0,0} & a_{0,i} \\ c_{1,-1} & a_{1,0} & a_{1,i} \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & c_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ c_{i,-1} & a_{i,0} & a_{i,1} \end{array}\right)$.
+  \end{center}
+  
+  By construction 
+  \begin{center}
+    $a_{-1,0} = a_{0,-1}$, \hspace{.1 in} $a_{1,0} = a_{0,1}$, 
+    
+    $c_{-1,1} = c_{1,-1}$, \hspace{.1 in} and \hspace{.1 in} $c_{-1,i} = c_{i,-1}$. 
+  \end{center}
+  So, the formula for the determinant of the first matrix is the same as the formula for the determinant of the second with $a_{1,i}$ replaced by $a_{i,1}$. As both matrices are singular we must have $a_{1,i} = a_{i,1}$.
+  
+  For the remaining terms verifying symmetry is a straightforward calculation (here $i,j > 1$):
+  \begin{center}
+    $a_{j,i} = \lambda_{i} a_{j,0} + \mu_{i} a_{j,1} = \lambda_{i} a_{0,j} + \mu_{i} a_{1,j}$
+
+    $= \lambda_{i} (\lambda_{j} a_{0,0} + \mu_{j} a_{0,1}) + \mu_{i} (\lambda_{j} a_{1,0} + \mu_{j} a_{1,1})$
+
+    $= \lambda_{j} (\lambda_{i} a_{0,0} + \mu_{i} a_{1,0}) + \mu_{j} (\lambda_{i} a_{0,1} + \mu_{i} a_{1,1})$
+
+    $= \lambda_{j} (\lambda_{i} a_{0,0} + \mu_{i} a_{0,1}) + \mu_{j} (\lambda_{i} a_{1,0} + \mu_{i} a_{1,1})$
+
+    $= \lambda_{j} a_{0,i} + \mu_{j} a_{1,i} = \lambda_{j} a_{i,0} + \mu_{j} a_{i,1} = a_{i,j}$.
+    
+  \end{center}
+  The verification of symmetry for $i,j < -1$ is essentially identical. So, we have constructed a symmetric rank two lift $\tilde{A}$ of $A$, and therefore $A$ has Kapranov rank two.
+\end{proof}
+
+\begin{lem}
+  Suppose $A$ is a matrix of the form:  
+  \begin{center}  
+    $\left(\begin{array}{ccc} B_{1} & \textbf{0} & \textbf{0} \\ \textbf{0} & 0 & \textbf{0} \\ \textbf{0} & \textbf{0} & B_{2}\end{array}\right)$
+  \end{center}
+  where $B_{1}$ and $B_{2}$ are positive symmetric matrices of positive size. If $A$ has symmetric tropical rank two, then it has symmetric Kapranov rank two.
+\end{lem}
+
+\begin{proof}
+  As in the previous lemma we number the rows and columns from $-k$ to $l$, where $k \times k$ and $l \times l$ are the dimensions of $B_{1}$ and $B_{2}$, respectively. Also, as in the previous lemma, we refer to the rows and columns of $A$ ``in reverse.'' Terms from $B_{1}$ or $B_{2}$ will be represented with an indexed lower-case ``b,'' while all other terms will be represented with an indexed lower-case ``a.'' 
+  
+  By induction we may assume the matrices
+  \begin{center}
+    $\left(\begin{array}{cc} B_{1} & \textbf{0} \\ \textbf{0} & 0 \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{cc} 0 & \textbf{0} \\ \textbf{0} & B_{2} \end{array}\right)$
+  \end{center}
+  have symmetric rank two lifts $\tilde{B}_{1}$ and $\tilde{B}_{2}$, respectively, and after possibly scaling we may assume the bottom-right entry of $\tilde{B}_{1}$ is equal to the top-left entry of $\tilde{B}_{2}$.
+  
+  We now construct a symmetric rank two lift $\tilde{A}$ of $A$. We begin with the lifts $\tilde{B}_{1}$ and $\tilde{B}_{2}$, and construct the entries in the upper-right zero matrix.
+  
+  Like in Lemma 3.7 we start with the $3 \times 3$ central minor:
+  \begin{center}
+    $\left(\begin{array}{ccc} b_{-1,-1} & a_{-1,0} & a_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{1,-1} & a_{1,0} & b_{1,1} \end{array}\right)$. 
+  \end{center}
+  We need this matrix to be singular and symmetric. That we can find degree zero entries $a_{-1,1} = a_{1,-1}$ that make this true follows from applying Kapranov's theorem to the determinant of the matrix
+  \begin{center}
+    $\left(\begin{array}{ccc} b_{-1,-1} & a_{-1,0} & x \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ x & a_{1,0} & b_{1,1} \end{array}\right)$.
+  \end{center}   
+  Note, we cannot assume $a_{-1,1} = a_{1,-1}$ is generic, but that will not be necessary. Also, note that as the $3 \times 3$ central minor is singular, there cannot be cancellation of leading terms for either of its minors:
+  \begin{center}
+    $\left|\begin{array}{cc} a_{-1,0} & a_{-1,1} \\ a_{0,0} & a_{0,1} \end{array}\right|$, \hspace{.1 in} or \hspace{.1 in } $\left|\begin{array}{cc} a_{0,-1} & a_{0,0} \\ a_{1,-1} & a_{1,0} \end{array}\right|$.
+  \end{center}
+  If in either of these minors we had cancellation of leading terms there would be no way the leading terms could all cancel for the determinant of the entire $3 \times 3$ matrix.
+  
+  Every term $a_{i,1}$ with $i < -1$ and $a_{i,-1}$ with $i > 1$ is determined by the need for the matrices
+  \begin{center}
+    $\left(\begin{array}{ccc} b_{-1,-1} & a_{-1,0} & a_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{i,-1} & a_{i,0} & b_{i,1} \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} b_{i,-1} & a_{i,0} & a_{i,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{1,-1} & a_{1,0} & b_{1,1} \end{array}\right)$  
+  \end{center} 
+  to be, respectively, singular. That every such term has degree zero follows from the leading terms of the $2 \times 2$ minors discussed above not canceling.
+  
+  Every column in $\tilde{B}_{2}$ can be written as a linear combination of the first two: 
+  \begin{center}
+    $\lambda_{j} \textbf{b}_{0} + \mu_{j} \textbf{b}_{1} = \textbf{b}_{j}$.
+  \end{center}
+  We use these relations to define the entries $a_{i,j}$ with $i < 0$ and $j > 0$:  
+  \begin{center}
+    $\lambda_{j} a_{i,0} + \mu_{j} a_{i,1} = a_{i,j}$.
+  \end{center}  
+  We similarly use the first two columns of $\tilde{B}_{1}$ to define the terms $a_{i,j}$ with $i > 0, j < 0$. This determines a rank two matrix $\tilde{A}$. We must verify the matrix is symmetric, and is a lift of $A$.
+  
+  Suppose $i < 0$. We must verify that all terms $a_{i,j}$ with $j > 1$ have degree zero. We can write column $j$ as a linear combination of columns $-1$ and $1$:
+  \begin{center}
+    $\sigma_{j}\textbf{a}_{-1} + \rho_{j}\textbf{a}_{1} = \textbf{a}_{j}$.
+  \end{center}
+  As all the terms in row $0$ have degree zero, it cannot be that $\sigma_{j}$ and $\rho_{j}$ both have positive degree, and if their degrees were negative they must be equal. If the degrees were negative this would imply elements in $\tilde{B}_{2}$ with negative degree, which cannot be. If $deg(\rho_{j}) > 0$ while $deg(\sigma_{j}) = 0$, then $\tilde{B}_{2}$ would have a column outside the first where all elements have degree zero, which cannot be. So, we must have $0 = deg(\rho_{j}) \leq deg(\sigma_{j})$. As $a_{i,-1}$ has positive degree and $a_{i,1}$ has degree zero it must be that $a_{i,j}$ has degree zero as well. Identical reasoning gives us that all terms $a_{i,j}$ with $j < -1$ and $i > 0$ also have degree zero.    
+  
+  It remains to be proven that $\tilde{A}$ is symmetric. As $\tilde{B}_{1}$ and $\tilde{B}_{2}$ are symmetric, we must only prove $a_{i,j} = a_{j,i}$ when $ij < 0$. Suppose $j > 1$, and examine the two matrices 
+  \begin{center}
+    $\left(\begin{array}{ccc} b_{-1,-1} & a_{-1,0} & a_{-1,j} \\ a_{0,-1} & a_{0,0} & a_{0,j} \\ a_{1,-1} & a_{1,0} & b_{1,j} \end{array}\right)$, \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} b_{-1,-1} & a_{-1,0} & a_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{j,-1} & a_{j,0} & b_{j,1} \end{array}\right)$.
+  \end{center}
+  By construction 
+  \begin{center}
+    $a_{-1,0} = a_{0,-1}$, \hspace{.1 in} $a_{0,1} = a_{1,0}$, 
+    
+    $a_{0,j} = a_{j,0}$, \hspace{.1 in} and \hspace{.1 in} $b_{1,j} = b_{j,1}$.
+  \end{center}
+  As the above matrices are also singular we must have $a_{-1,j} = a_{j,-1}$. The proof that $a_{1,j} = a_{j,1}$ for $j < -1$ is essentially identical. From here verifying symmetry is a calculation:
+  \begin{center}
+    
+    $a_{j,i} = \sigma_{i} a_{j,-1} + \rho_{i} a_{j,1} = \sigma_{i} a_{-1,j} + \rho_{i} a_{1,j}$
+    
+    $= \sigma_{i} (\sigma_{j} a_{-1,-1} + \rho_{j} a_{-1,1}) + \mu_{i} (\sigma_{j} a_{1,-1} + \rho_{j} a_{1,1})$
+    
+    $= \sigma_{j} (\sigma_{i} a_{-1,-1} + \rho_{i} a_{1,-1}) + \rho_{j} (\sigma_{i} a_{-1,1} + \rho_{i} a_{1,1})$
+    
+    $= \sigma_{j} (\sigma_{i} a_{-1,-1} + \rho_{i} a_{-1,1}) + \rho_{j} (\sigma_{i} a_{1,-1} + \rho_{i} a_{1,1})$
+    
+    $= \sigma_{j} a_{-1,i} + \rho_{j} a_{1,i} = \sigma_{j} a_{i,-1} + \rho_{j} a_{i,1} = a_{i,j}$.
+  \end{center}
+  
+  So, $\tilde{A}$ is a rank two symmetric lift of $A$, and therefore $A$ has symmetric Kapranov rank two.
+\end{proof}
+
+As outlined in Theorem 3.6 above, we combine Lemma 3.7 and Lemma 3.8 in our proof of the next lemma.
+
+\begin{lem}
+  Suppose $A$ has the form  
+  \begin{center}
+    $\left(\begin{array}{ccccc} B_{1} & \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & B_{2} & \textbf{0} & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & 0 & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & \textbf{0} & \textbf{0} & C \\ \textbf{0} & \textbf{0} & \textbf{0} & C^{T} & \textbf{0} \end{array}\right)$,
+  \end{center}
+  where $B_{1}, B_{2}$ are symmetric and positive, $C$ is nonnegative and does not contain a zero column, and either $C$ or both $B_{1}$ and $B_{2}$ have positive size. If $A$ has symmetric tropical rank two it has symmetric Kapranov rank two.
+\end{lem}
+
+\begin{proof}
+  If $B_{1}$ and $B_{2}$ both have size zero, this is Lemma 3.7. If $C$ has size zero, this is Lemma 3.8. So, suppose $C$ has positive size, and at least one of $B_{1}$ and $B_{2}$ have positive size. The method of proof here is similar to the method used for the previous two lemmas. 
+  
+  By induction we may find a rank two symmetric lift for the upper-left matrix      
+  \begin{center}  
+    $\left(\begin{array}{ccc} B_{1} & \textbf{0} & \textbf{0} \\ \textbf{0} & B_{2} & \textbf{0} \\ \textbf{0} & \textbf{0} & 0 \end{array}\right)$,
+  \end{center}
+  and the lower-right matrix
+  \begin{center}
+      $\left(\begin{array}{ccc} 0 & \textbf{0} & \textbf{0} \\ \textbf{0} & \textbf{0} & C \\ \textbf{0} & C^{T} & \textbf{0} \end{array}\right)$.
+  \end{center}
+  Call these lifts $\tilde{B}$ and $\tilde{C}$, respectively. After possibly some scaling we may assume the bottom-right entry of $\tilde{B}$ coincides with the top-left entry of $\tilde{C}$.
+  
+  The lifts $\tilde{B}$ and $\tilde{C}$ will be, respectively, the upper-left and lower-right parts of the lift $\tilde{A}$ we wish to construct. We number the rows and columns of $\tilde{A}$ in a manner similar to Lemmas 3.7 and 3.8, with the $a_{0,0}$ entry being the degree zero entry that must match up for the two lifts. We will refer to any element of $A$ with an indexed lower-case $A$, and not distinguish among elements in $B_{1}, B_{2}, C, C^{T}$, or outside these submatrices. We must complete the lift $\tilde{A}$ by finding entries for the terms $a_{i,j}$ with $ij < 0$.
+  
+  We again start with the $3 \times 3$ central submatrix:  
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & a_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{1,-1} & a_{1,0} & a_{1,1} \end{array}\right)$.
+  \end{center}  
+  We pick $a_{-1,1}$ and $a_{1,-1}$ such that this matrix is singular and $a_{-1,1} = a_{1,-1}$. Every term $a_{i,1}$ for $i < -1$, and $a_{i,-1}$ for $i > 1$, is then determined by the need for the matrices 
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{-1,-1} & a_{-1,0} & a_{-1,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{i,-1} & a_{i,0} & a_{i,1}\end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} a_{i,-1} & a_{i,0} & a_{i,1} \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{1,-1} & a_{1,0} & a_{1,1} \end{array}\right)$
+  \end{center}
+  to be, respectively, singular.
+  
+  Every column of $\tilde{C}$ can be written as a linear combination of the first two:
+  \begin{center}
+    $\lambda_{j}\textbf{c}_{0} + \mu_{j}\textbf{c}_{1} = \textbf{c}_{j}$.  
+  \end{center}
+  We use these relations to define the entries $a_{i,j}$ with $i < 0$ and $j > 1$:
+  \begin{center}
+    $\lambda_{j}a_{i,0} + \mu_{j}a_{i,1} = a_{i,j}$.
+  \end{center}
+  We similarly use the first two columns of $\tilde{B}$ to define the terms $a_{i,j}$ with $i > 0, j < -1$. This determines a rank two matrix $\tilde{A}$. We must verify the matrix is symmetric, and is a lift of $A$.
+  
+  We first prove $\tilde{A}$ is symmetric. By construction all terms of the form $a_{i,j}$ with $ij \geq 0$ satisfy $a_{i,j} = a_{j,i}$. Also, by construction $a_{1,-1} = a_{-1,1}$. Using these facts we note the matrices   
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{i,-1} & a_{i,0} & x \\ a_{0,-1} & a_{0,0} & a_{0,1} \\ a_{1,-1} & a_{1,0} & a_{1,1} \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} a_{-1,i} & a_{-1,0} & a_{-1,1} \\ a_{0,i} & a_{0,0} & a_{0,1} \\ x & a_{1,0} & a_{1,1} \end{array}\right)$
+  \end{center} 
+  are transposes. Therefore, $a_{i,1}$, the unique value of $x$ that matrix the matrix on the left singular, is equal to $a_{1,i}$, the unique value of $x$ that makes the matrix on the right singular.
+  
+  Using these equalities we note the matrices
+  \begin{center}    
+    $\left(\begin{array}{ccc} a_{i,i} & a_{i,0} & x \\ a_{0,i} & a_{0,0} & a_{0,j} \\ a_{1,i} & a_{1,0} & a_{1,j} \end{array}\right)$ \hspace{.1 in} and \hspace{.1 in} $\left(\begin{array}{ccc} a_{i,i} & a_{i,0} & a_{i,1} \\ a_{0,i} & a_{0,0} & a_{0,1} \\ x & a_{j,0} & a_{j,1} \end{array}\right)$
+  \end{center}  
+  are also transposes. So, $a_{i,j}$, the unique value of $x$ that makes the matrix on the left singular, is equal to $a_{j,i}$, the unique value of $x$ that makes the matrix on the right singular. So, the matrix $\tilde{A}$ is symmetric.
+  
+  It remains to be proven that each $a_{i,j}$ with $ij < 0$ has degree zero. Suppose $i < 0, j > 0$. That $a_{i,j}$ has degree zero follows because the matrix
+  \begin{center}
+    $\left(\begin{array}{ccc} a_{i,i} & a_{i,0} & a_{i,j} \\ a_{0,i} & a_{0,0} & a_{0,j} \\ a_{j,i} & a_{j,0} & a_{j,j} \end{array}\right)$
+  \end{center}   
+  is singular, $a_{i,i}$ has positive degree, and all other terms that are not $a_{i,j} = a_{j,i}$ have degree zero. The only way this matrix could possibly be singular is if $a_{i,j}$ has degree zero. As our matrix is symmetric this completes the proof.
+\end{proof}
+
+\subsection{Completed Theorem}
+
+We now have all the tools we need to complete the proof of Theorem 3.6.
+
+\begin{proof}[Symmetric tropical rank two implies symmetric Kapranov rank two]
+  Suppose $A$ is a symmetric matrix with symmetric tropical rank two. We may assume $A$ is in the form given by Lemma 3.4. If $A$ has only one zero row/column then by Lemma 3.9 $A$ has symmetric Kapranov rank two. If $A$ has no zero row/column then the matrix
+  \begin{center}
+    $A^{+} = \left(\begin{array}{cc} 0 & \textbf{0} \\ \textbf{0} & A \end{array}\right)$
+  \end{center}
+  has symmetric tropical rank two by Lemma 3.5, and therefore symmetric Kapranov rank two by Lemma 3.9. If $A^{+}$ has symmetric Kapranov rank two, then by eliminating the first row/column from the lift we see $A$ has symmetric Kapranov rank two as well.
+  
+  If $A$ has more than one zero row/column we may proceed by induction on the number of such columns. In particular, $A$ must have the form
+  \begin{center}
+    $A = \left(\begin{array}{cc} 0 & \textbf{0} \\ \textbf{0} & A^{-} \end{array}\right)$,
+  \end{center}
+  where $A^{-}$ is a symmetric matrix with symmetric tropical rank two, with one fewer zero row/column than $A$, and therefore by induction $A^{-}$ has symmetric Kapranov rank two. By Lemma 3.5 $A$ has symmetric Kapranov rank two as well.
+\end{proof}
+
+Combining Theorem 3.2 and Theorem 3.6 we see that the $r \times r$ minors of a symmetric $n \times n$ matrix form a tropical basis for $r = 2$ and $r = 3$.
+
+\end{document}
